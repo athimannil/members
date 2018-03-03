@@ -1,33 +1,28 @@
-import React from 'react';
+import React, { Component } from "react";
+import { Route, Switch } from 'react-router-dom';
+
+import { Header } from './header/Header';
+import { Home } from './home/Home';
+import { Members } from './members/Members';
+import { About } from './about/About';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: 'Mo'
-    };
-  }
-
   render() {
     return (
       <main className="main">
-        <h1>Hello mate !</h1>
-        <div>
-          <button type="button" className="btn btn-primary">Primary</button>
-          <button
-  type="button"
-  className="btn btn-secondary">Secondary</button>
-          <button type="button" className="btn btn-success">Success</button>
-          <button type="button" className="btn btn-danger">Danger</button>
-          <button type="button" className="btn btn-warning">Warning</button>
-          <button type="button" className="btn btn-info">Info</button>
-          <button type="button" className="btn btn-light">Light</button>
-          <button type="button" className="btn btn-dark">Dark</button>
-          <button type="button" className="btn btn-link">Link</button>
-        </div>
+        <Header />
+        <Switch>
+          <Route exact path='/' component={Home}/>
+          <Route path='/members' component={Members}/>
+          <Route path='/about' component={About}/>
+        </Switch>
       </main>
     );
   }
 }
+
+// App.propTypes = {
+//   children: propTypes.object.isRequired
+// }
 
 export default App;
