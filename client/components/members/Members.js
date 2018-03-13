@@ -67,7 +67,7 @@ class Members extends React.Component {
     event.preventDefault();
     const isFormValid = this.validateForm();
     // console.log(event);
-    console.log(this.state);
+    // console.log(this.state);
     if (isFormValid) {
       // this.submitFormData();
       this.props.dispatch(memberActions.createMembers(this.state.member));
@@ -127,7 +127,8 @@ class Members extends React.Component {
   }
 
   membersRow(member, index) {
-    return <div key={index}>{member}</div>
+    console.log(member);
+    return <div key={index}>{member.val}</div>
   }
   render() {
     return (
@@ -135,7 +136,7 @@ class Members extends React.Component {
         <hr />
         <hr />
         <hr />
-        {/*this.props.map(this.membersRow)*/}
+        {this.props.members.map(this.membersRow)}
         <hr />
         <form>
           <div className="form-row">
@@ -263,12 +264,13 @@ class Members extends React.Component {
 }
 
 Members.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  members: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
   return {
-    member: state.members
+    members: state.members
   };
 }
 
