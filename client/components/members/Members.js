@@ -1,45 +1,50 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as memberActions from './../../actions/membersAction';
 
-export class Members extends React.Component {
+class Members extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       passwordType: 'password',
-      fillables: ['firstName', 'lastName', 'email', 'mobile', 'abroadAddress', 'nativeAddress', 'city'], // this is done through manual listing in array so that you have control which fields should be validated for before submit
-      firstName: {
-        val: '',
-        isValid: true,
-        error: 'Please enter your first name'
-      },
-      lastName: {
-        val: '',
-        isValid: true,
-        error: 'Please enter your last name'
-      },
-      email: {
-        val: '',
-        isValid: true,
-        error: 'Please enter valid email address'
-      },
-      mobile: {
-        val: '',
-        isValid: true,
-        error: 'Please enter mobile'
-      },
-      abroadAddress: {
-        val: '',
-        isValid: true,
-        error: 'Please enter mobile'
-      },
-      nativeAddress: {
-        val: '',
-        isValid: true,
-        error: 'Please enter mobile'
-      },
-      city: {
-        val: '',
-        isValid: true,
-        error: 'Please enter mobile'
+      fillables: ['firstName', 'lastName', 'email', 'mobile', 'abroadAddress', 'city'], // this is done through manual listing in array so that you have control which fields should be validated for before submit
+      member: {
+        firstName: {
+          val: '',
+          isValid: true,
+          error: 'Please enter your first name'
+        },
+        lastName: {
+          val: '',
+          isValid: true,
+          error: 'Please enter your last name'
+        },
+        email: {
+          val: '',
+          isValid: true,
+          error: 'Please enter valid email address'
+        },
+        mobile: {
+          val: '',
+          isValid: true,
+          error: 'Please enter mobile'
+        },
+        abroadAddress: {
+          val: '',
+          isValid: true,
+          error: 'Please enter mobile'
+        },
+        nativeAddress: {
+          val: '',
+          isValid: true,
+          error: 'Please enter mobile'
+        },
+        city: {
+          val: '',
+          isValid: true,
+          error: 'Please enter mobile'
+        }
       }
     };
   }
@@ -47,12 +52,13 @@ export class Members extends React.Component {
   onChange = (event) => {
     const input = event.target;
     const inputValue = input.type === "checkbox" ? input.checked : input.value;
-    console.log(inputValue);
     this.setState({
-      [input.name]: {
-        ...this.state[input.name],
-        val: inputValue,
-        isValid: this.validateFormField(input)
+      member: {
+        ...this.state.member,
+        [input.name]: {
+          val: inputValue,
+          isValid: this.validateFormField(input)
+        }
       }
     });
   }
@@ -60,14 +66,16 @@ export class Members extends React.Component {
   onSubmit = event => {
     event.preventDefault();
     const isFormValid = this.validateForm();
-    console.log(event);
+    // console.log(event);
     console.log(this.state);
-    // if (isFormValid) {
-    //   this.submitFormData();
-    // } else {
+    if (isFormValid) {
+      // this.submitFormData();
+      this.props.dispatch(memberActions.createMembers(this.state.member));
+    } else {
     //   this.displayErrorsForInvalidFields();
     //   // invoke some popup saying that some validations didn't pass
-    // }
+      console.log(isFormValid);
+    }
   }
 
   validateForStringChars(str) {
@@ -94,12 +102,15 @@ export class Members extends React.Component {
         inputValidationResult = this.validateForEmail(field.value) && field.value.length > 0;
         break;
       case 'mobile':
-        inputValidationResult = field.value.length > 10;
+        inputValidationResult = field.value.length > 8;
         break;
       case 'abroadAddress':
         inputValidationResult = field.value.length > 0;
         break;
       case 'nativeAddress':
+        inputValidationResult = field.value.length > 0;
+        break;
+      case 'city':
         inputValidationResult = field.value.length > 0;
         break;
       case 'terms':
@@ -112,14 +123,19 @@ export class Members extends React.Component {
   }
 
   validateForm() {
-    return this.state.fillables.every((field) => this.state[field].isValid && this.state[field].val);
+    return this.state.fillables.every((field) => this.state.member[field].isValid && this.state.member[field].val);
   }
 
+  membersRow(member, index) {
+    return <div key={index}>{member}</div>
+  }
   render() {
     return (
       <div className="container">
         <hr />
         <hr />
+        <hr />
+        {/*this.props.map(this.membersRow)*/}
         <hr />
         <form>
           <div className="form-row">
@@ -131,7 +147,7 @@ export class Members extends React.Component {
                 id="firstName"
                 name="firstName"
                 placeholder="First Name"
-                value={this.state.firstName.val}
+                value={this.state.member.firstName.val}
                 onChange={this.onChange}
                 />
             </div>
@@ -143,7 +159,7 @@ export class Members extends React.Component {
                 id="lastName"
                 name="lastName"
                 placeholder="Last name"
-                value={this.state.lastName.val}
+                value={this.state.member.lastName.val}
                 onChange={this.onChange}
                 />
             </div>
@@ -157,7 +173,7 @@ export class Members extends React.Component {
                 id="email"
                 name="email"
                 placeholder="Email"
-                value={this.state.email.val}
+                value={this.state.member.email.val}
                 onChange={this.onChange}
                 />
             </div>
@@ -169,7 +185,7 @@ export class Members extends React.Component {
                 id="mobile"
                 name="mobile"
                 placeholder="Mobile"
-                value={this.state.mobile.val}
+                value={this.state.member.mobile.val}
                 onChange={this.onChange}
                 />
             </div>
@@ -182,7 +198,7 @@ export class Members extends React.Component {
               id="abroadAddress"
               name="abroadAddress"
               placeholder="Apartment, studio, or floor"
-              value={this.state.abroadAddress.val}
+              value={this.state.member.abroadAddress.val}
               onChange={this.onChange}
               />
           </div>
@@ -194,7 +210,7 @@ export class Members extends React.Component {
               id="nativeAddress"
               placeholder="1234 Main St"
               name="nativeAddress"
-              value={this.state.nativeAddress.val}
+              value={this.state.member.nativeAddress.val}
               onChange={this.onChange}
               />
           </div>
@@ -207,7 +223,7 @@ export class Members extends React.Component {
                 id="city"
                 placeholder="City"
                 name="city"
-                value={this.state.city.val}
+                value={this.state.member.city.val}
                 onChange={this.onChange}
                 />
             </div>
@@ -245,3 +261,15 @@ export class Members extends React.Component {
     );
   }
 }
+
+Members.propTypes = {
+  dispatch: PropTypes.func.isRequired
+};
+
+function mapStateToProps(state, ownProps) {
+  return {
+    member: state.members
+  };
+}
+
+export default connect(mapStateToProps)(Members)

@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import { Header } from './header/Header';
 import { Home } from './home/Home';
-import { Members } from './members/Members';
+import Members from './members/Members';
 import { About } from './about/About';
 
 class App extends React.Component {
