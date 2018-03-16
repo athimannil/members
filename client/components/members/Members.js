@@ -1,8 +1,8 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as memberActions from './../../actions/membersAction';
-
 class Members extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -127,16 +127,59 @@ class Members extends React.Component {
   }
 
   membersRow(member, index) {
-    console.log(member);
-    return <div key={index}>{member.val}</div>
+    return (
+      <tr key={member.id}>
+        <td>{member.firstname} {member.lastname}</td>
+        <td>{member.city}</td>
+        <td>{member.mobile}</td>
+        <td>{member.email}</td>
+      </tr>
+    )
   }
+
   render() {
+    const membersTable = this.props.members.map(member => {
+      return (
+        <tr key={member.id}>
+          <td>{member.firstname} {member.lastname}</td>
+          <td>{member.city}</td>
+          <td>{member.mobile}</td>
+          <td>{member.email}</td>
+        </tr>
+      );
+    });
     return (
       <div className="container">
-        <hr />
-        <hr />
-        <hr />
-        {this.props.members.map(this.membersRow)}
+        <div className="table-responsive">
+          <table className="table table-hover table-sm">
+            <thead className="thead-light">
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+              </tr>
+            </thead>
+            <tbody>
+              {membersTable}
+            </tbody>
+          </table>
+        </div>
+
+
+        <table className="table table-hover table-sm">
+          <thead className="thead-light">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+              <th scope="col">Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.members.map(this.membersRow)}
+          </tbody>
+        </table>
         <hr />
         <form>
           <div className="form-row">
@@ -264,8 +307,8 @@ class Members extends React.Component {
 }
 
 Members.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  members: PropTypes.array.isRequired
+  members: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
@@ -274,4 +317,10 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(Members)
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(memberActions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Members)

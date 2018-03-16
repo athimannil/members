@@ -1,12 +1,10 @@
+import * as types from './../actions/actionTypes';
+
 export default function memberReducer(state = [], action) {
   switch (action.type) {
-    case 'CREATE_MEMBER':
-      return [...state,
-        Object.assign({}, action.member)
-      ];
-
+    case types.LOAD_MEMBERS_SUCCESS:
+      return action.members;
     default:
       return state;
-
   }
 }
