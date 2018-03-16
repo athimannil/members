@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as memberActions from './../../actions/membersAction';
+import MembersList from './MembersList';
+
 class Members extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -126,60 +128,14 @@ class Members extends React.Component {
     return this.state.fillables.every((field) => this.state.member[field].isValid && this.state.member[field].val);
   }
 
-  membersRow(member, index) {
-    return (
-      <tr key={member.id}>
-        <td>{member.firstname} {member.lastname}</td>
-        <td>{member.city}</td>
-        <td>{member.mobile}</td>
-        <td>{member.email}</td>
-      </tr>
-    )
-  }
-
   render() {
-    const membersTable = this.props.members.map(member => {
-      return (
-        <tr key={member.id}>
-          <td>{member.firstname} {member.lastname}</td>
-          <td>{member.city}</td>
-          <td>{member.mobile}</td>
-          <td>{member.email}</td>
-        </tr>
-      );
-    });
+    const { members } = this.props;
+console.log(members);
     return (
       <div className="container">
         <div className="table-responsive">
-          <table className="table table-hover table-sm">
-            <thead className="thead-light">
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-              </tr>
-            </thead>
-            <tbody>
-              {membersTable}
-            </tbody>
-          </table>
+          <MembersList members={members} />
         </div>
-
-
-        <table className="table table-hover table-sm">
-          <thead className="thead-light">
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.props.members.map(this.membersRow)}
-          </tbody>
-        </table>
         <hr />
         <form>
           <div className="form-row">
