@@ -5,8 +5,6 @@ import SelectInput from '../common/SelectInput';
 
 // const MembersForm = ({member, allAuthors, onSave, onChange, loading, errors}) => {
 const MembersForm = ({member, genders, onSave, onChange, loading, errors}) => {
-  console.log(errors);
-  console.log(errors.firstName);
   return(
     <form>
       <div className="form-row">
@@ -14,7 +12,7 @@ const MembersForm = ({member, genders, onSave, onChange, loading, errors}) => {
           <TextInput
             name="firstName"
             label="First Name"
-            value={member.firstname}
+            value={member.firstName}
             onChange={onChange}
             error={errors.firstName}
             />
@@ -23,7 +21,7 @@ const MembersForm = ({member, genders, onSave, onChange, loading, errors}) => {
           <TextInput
             name="lastName"
             label="Last name"
-            value={member.lastname}
+            value={member.lastName}
             onChange={onChange}
             error={errors.lastName}
             />
@@ -52,7 +50,7 @@ const MembersForm = ({member, genders, onSave, onChange, loading, errors}) => {
       <div className="form-group">
         <TextInput
           name="abroadAddress"
-          label="Apartment, studio, or floor"
+          label="Abroad Address"
           value={member.abroadAddress}
           onChange={onChange}
           error={errors.abroadAddress}
@@ -60,8 +58,9 @@ const MembersForm = ({member, genders, onSave, onChange, loading, errors}) => {
       </div>
       <div className="form-group">
         <TextInput
+          name="nativeAddress"
           type="text"
-          label="1234 Main St"
+          label="Native Address"
           value={member.nativeAddress}
           onChange={onChange}
           error={errors.nativeAddress}
@@ -77,23 +76,22 @@ const MembersForm = ({member, genders, onSave, onChange, loading, errors}) => {
             error={errors.city}
             />
         </div>
-        {/*
-        <div className="form-group col-md-4">
+        <div className="form-group col-md-6">
           <SelectInput
             name="gender"
-            label="gender"
+            label="Gender"
             defaultOption="Select Gender"
             options={genders}
             onChange={onChange}
             error={errors.gender}
           />
         </div>
-        */}
         <div className="col-md-6">
           <TextInput
             name="postalcode"
             label="Post Code"
             value="676122"
+            onChange={onChange}
           />
         </div>
       </div>
@@ -106,11 +104,11 @@ const MembersForm = ({member, genders, onSave, onChange, loading, errors}) => {
           <label className="form-check-label" htmlFor="gridCheck">Check me out</label>
         </div>
       </div>
-      {/*disable={loading}*/}
-      {/*onClick={onSave}*/}
       <input
         type="submit"
         className="btn btn-primary"
+        disable={loading}
+        onClick={onSave}
         value={loading ? 'Saving..' : 'Save'}
       />
     </form>
@@ -121,7 +119,7 @@ MembersForm.propTypes = {
   member: PropTypes.object.isRequired,
   // allAuthors: PropTypes.array.isRequired,
   // onSave: PropTypes.func.isRequired,
-  // onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   errors: PropTypes.object,
 };

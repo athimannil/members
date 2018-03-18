@@ -10,9 +10,19 @@ class ManageMembers extends React.Component {
     super(props, context);
 
     this.state = {
-      member: Object.assign({}, this.props.member),
+      member: Object.assign({}, props.member),
       errors: {}
     };
+
+    this.updateMemberState = this.updateMemberState.bind(this);
+  }
+
+  updateMemberState(event) {
+    const field = event.target.name;
+    let member = this.state.member;
+    member[field] = event.target.value;
+    console.log(member[field]);
+    return this.setState({member: member});
   }
 
   render() {
@@ -20,7 +30,8 @@ class ManageMembers extends React.Component {
       <div>
         <h2>Hello mate</h2>
         <MembersForm
-          genders={[{male:'male', female: 'female'}]}
+          genders={[{text:'Male', value:'male'}, {text: 'Female', value: 'female'}]}
+          onChange={this.updateMemberState}
           member={this.state.member}
           errors={this.state.errors}
         />
@@ -35,7 +46,7 @@ ManageMembers.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  let member = {'id': '',  'firstname': '',  'lastname': '',  'email': '',  'mobile': '',  'abroadAddress': '',  'nativeAddress': '',  'city': '',  'postalcode': '', 'length': ''};
+  let member = {'id': '',  'firstName': '',  'lastName': '',  'email': '',  'mobile': '',  'abroadAddress': '',  'nativeAddress': '',  'city': '',  'postalcode': '', 'length': ''};
   console.log(member);
   return {
     // members: state.members

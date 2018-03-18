@@ -2,13 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const TextInput = ({name, label, onChange, value, placeholder, error}) => {
-  console.log(name)
-  console.log(label);
-  console.log(onChange);
-  console.log(value);
-  console.log(placeholder);
-  console.log(error);
-
   let wrapperClass = 'form-group';
   // if (error & error.length > 0) {
   //   wrapperClass += ' ' + 'has-error';
@@ -33,9 +26,9 @@ const TextInput = ({name, label, onChange, value, placeholder, error}) => {
 };
 
 TextInput.propTypes = {
-  // name: PropTypes.string.isRequired,
-  // label: PropTypes.string.isRequired,
-  // onChange: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
   value: PropTypes.string,
   placeholder: PropTypes.string,
   error: PropTypes.string
