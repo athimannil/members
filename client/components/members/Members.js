@@ -1,6 +1,6 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as memberActions from './../../actions/membersAction';
 import MembersList from './MembersList';
@@ -130,7 +130,7 @@ class Members extends React.Component {
 
   render() {
     const { members } = this.props;
-console.log(members);
+    console.log(members);
     return (
       <div className="container">
         <div className="table-responsive">
