@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as memberActions from './../../actions/membersAction';
@@ -128,12 +129,28 @@ class Members extends React.Component {
     return this.state.fillables.every((field) => this.state.member[field].isValid && this.state.member[field].val);
   }
 
+  redirectToAddMember() {
+    // console.log(this);
+    // console.log(this.props);
+    browserHistory.push('/member');
+    // // this.props.history.push("/back")
+    // // history.push('/location')
+    // // history.push('/location');
+    // window.history.pushState(null, null, '/location');
+  }
+
   render() {
     const { members } = this.props;
     console.log(members);
     return (
       <div className="container">
         <div className="table-responsive">
+          <input
+            type="submit"
+            value="New Member"
+            className="btn btn-outline-primary"
+            onClick={this.redirectToAddMember}
+          />
           <MembersList members={members} />
         </div>
         <hr />

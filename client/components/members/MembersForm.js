@@ -94,14 +94,14 @@ const MembersForm = ({member, genders, onSave, onChange, loading, errors}) => {
             onChange={onChange}
           />
         </div>
-      </div>
-      <div className="form-group">
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            id="gridCheck" />
-          <label className="form-check-label" htmlFor="gridCheck">Check me out</label>
+        <div className="form-group col-md-6">
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="gridCheck" />
+            <label className="form-check-label" htmlFor="gridCheck">Check me out</label>
+          </div>
         </div>
       </div>
       <input
@@ -118,7 +118,7 @@ const MembersForm = ({member, genders, onSave, onChange, loading, errors}) => {
 MembersForm.propTypes = {
   member: PropTypes.object.isRequired,
   // allAuthors: PropTypes.array.isRequired,
-  // onSave: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   errors: PropTypes.object,
