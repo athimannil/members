@@ -28,6 +28,7 @@ class ManageMembers extends React.Component {
   saveMember(event) {
     event.preventDefault();
     this.props.actions.saveMember(this.state.member);
+    this.context.router.push('/members');
   }
 
   render() {
@@ -48,6 +49,10 @@ class ManageMembers extends React.Component {
 ManageMembers.propTypes = {
   member: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
+};
+
+ManageMembers.contextTypes = {
+  router: PropTypes.object
 };
 
 function mapStateToProps(state, ownProps) {
