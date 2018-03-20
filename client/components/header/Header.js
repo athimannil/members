@@ -11,13 +11,13 @@ export class Header extends React.Component {
               <Link className="nav-link active" to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="members">Members</Link>
+              <Link className="nav-link" to="/members">Members</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="about">About</Link>
+              <Link className="nav-link" to="/about">About</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link disabled" to="admin">Admin</Link>
+              <Link className="nav-link disabled" to="/admin">Link>Admin</Link>
             </li>
           </ul>
         </nav>
