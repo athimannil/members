@@ -18,6 +18,12 @@ class ManageMembers extends React.Component {
     this.saveMember = this.saveMember.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.member.id != nextProps.member.id) {
+      this.setState({member: Object.assign({}, nextProps.member)});
+    }
+  }
+
   updateMemberState(event) {
     const field = event.target.name;
     let member = this.state.member;
@@ -57,19 +63,16 @@ ManageMembers.contextTypes = {
 
 function getMemberById(members, id) {
   const member = members.filter(member => member.id == id);
-console.log(member);
   if (member.length) return member[0];
   return null;
 }
 
 function mapStateToProps(state, ownProps) {
-  // console.clear();
   const memberId = ownProps.match.params.id;
-  console.log(memberId);
 
   let member = {'id': '',  'firstName': '',  'lastName': '',  'email': '',  'mobile': '',  'abroadAddress': '',  'nativeAddress': '',  'city': '',  'postalcode': '', 'length': ''};
 
-  if (memberId) {
+  if (memberId && state.members.length > 0) {
     member = getMemberById(state.members, memberId);
   }
 

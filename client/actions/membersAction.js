@@ -41,10 +41,8 @@ export function loadMembers() {
 export function saveMember(member) {
   return function (dispatch, getState) {
     return memberApi.saveMember(member).then(saveMember => {
-
       member.id ? dispatch(updateMemberSuccess(saveMember)) :
         dispatch(createMemberSuccess(saveMember));
-console.log(saveMember);
     }).catch(error => {
       throw(error);
     });
