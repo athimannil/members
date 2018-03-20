@@ -28,7 +28,7 @@ class ManageMembers extends React.Component {
   saveMember(event) {
     event.preventDefault();
     this.props.actions.saveMember(this.state.member);
-    this.context.router.push('/members');
+    // this.context.router.push('/members');
   }
 
   render() {
@@ -55,8 +55,24 @@ ManageMembers.contextTypes = {
   router: PropTypes.object
 };
 
+function getMemberById(members, id) {
+  const member = members.filter(member => member.id == id);
+console.log(member);
+  if (member.length) return member[0];
+  return null;
+}
+
 function mapStateToProps(state, ownProps) {
+  // console.clear();
+  const memberId = ownProps.match.params.id;
+  console.log(memberId);
+
   let member = {'id': '',  'firstName': '',  'lastName': '',  'email': '',  'mobile': '',  'abroadAddress': '',  'nativeAddress': '',  'city': '',  'postalcode': '', 'length': ''};
+
+  if (memberId) {
+    member = getMemberById(state.members, memberId);
+  }
+
   return {
     // members: state.members
     member: member
