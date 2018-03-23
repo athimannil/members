@@ -11,7 +11,8 @@ class ManageMembers extends React.Component {
 
     this.state = {
       member: Object.assign({}, props.member),
-      errors: {}
+      errors: {},
+      saving: false
     };
 
     this.updateMemberState = this.updateMemberState.bind(this);
@@ -33,8 +34,14 @@ class ManageMembers extends React.Component {
 
   saveMember(event) {
     event.preventDefault();
-    this.props.actions.saveMember(this.state.member);
-    this.context.router.history.push('/members')
+    this.setState({saving: true});
+    this.props.actions.saveMember(this.state.member)
+      .then(() => this.redirect());
+  }
+
+  redirect() {
+    this.setState({saving: true});
+    this.context.router.history.push('/members');
   }
 
   render() {
@@ -46,6 +53,7 @@ class ManageMembers extends React.Component {
           onSave={this.saveMember}
           member={this.state.member}
           errors={this.state.errors}
+          saving={this.state.saving}
         />
       </div>
     );
