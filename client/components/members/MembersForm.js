@@ -4,7 +4,7 @@ import TextInput from '../common/TextInput';
 import SelectInput from '../common/SelectInput';
 
 // const MembersForm = ({member, allAuthors, onSave, onChange, loading, errors}) => {
-const MembersForm = ({member, genders, onSave, onChange, loading, errors}) => {
+const MembersForm = ({member, genders, onSave, onChange, saving, errors}) => {
   return(
     <form>
       <div className="form-row">
@@ -106,10 +106,9 @@ const MembersForm = ({member, genders, onSave, onChange, loading, errors}) => {
       </div>
       <input
         type="submit"
+        value={saving ? 'Saving..' : 'Save'}
         className="btn btn-primary"
-        disable={loading}
         onClick={onSave}
-        value={loading ? 'Saving..' : 'Save'}
       />
     </form>
   )
@@ -120,7 +119,7 @@ MembersForm.propTypes = {
   // allAuthors: PropTypes.array.isRequired,
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  loading: PropTypes.bool,
+  saving: PropTypes.bool,
   errors: PropTypes.object,
 };
 
