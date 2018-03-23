@@ -34,7 +34,7 @@ class ManageMembers extends React.Component {
   saveMember(event) {
     event.preventDefault();
     this.props.actions.saveMember(this.state.member);
-    // this.context.router.push('/members');
+    this.context.router.history.push('/members')
   }
 
   render() {
