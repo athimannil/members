@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
-import memberApi from './../api/mockMemberApi'
+import memberApi from './../api/mockMemberApi';
+import {beginAjaxCall} from './ajaxStatusAction';
 
 export function loadMembersSuccess(members) {
   return { type: types.LOAD_MEMBERS_SUCCESS, members};
@@ -30,6 +31,7 @@ export function loadMembers() {
 
 export function loadMembers() {
   return function (dispatch) {
+    dispatch(beginAjaxCall);
     return memberApi.getAllMembers().then(members => {
         dispatch(loadMembersSuccess(members))
       }).catch(error => {
@@ -40,6 +42,7 @@ export function loadMembers() {
 
 export function saveMember(member) {
   return function (dispatch, getState) {
+    dispatch(beginAjaxCall);
     return memberApi.saveMember(member).then(saveMember => {
       member.id ? dispatch(updateMemberSuccess(saveMember)) :
         dispatch(createMemberSuccess(saveMember));
