@@ -7,7 +7,6 @@ export function loadMembersSuccess(members) {
 }
 
 export function createMemberSuccess(member) {
-  console.log(member);
   return { type: types.CREATE_MEMBER_SUCCESS, member};
 }
 export function updateMemberSuccess(member) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
+import { browserHistory, Redirect } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as memberActions from './../../actions/membersAction';
@@ -10,6 +10,7 @@ class Members extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
+      redirectForNewMember: false,
       passwordType: 'password',
       fillables: ['firstName', 'lastName', 'email', 'mobile', 'abroadAddress', 'city'], // this is done through manual listing in array so that you have control which fields should be validated for before submit
       member: {
@@ -129,17 +130,16 @@ class Members extends React.Component {
     return this.state.fillables.every((field) => this.state.member[field].isValid && this.state.member[field].val);
   }
 
-  redirectToAddMember() {
-    // console.log(this);
-    // console.log(this.props);
-    browserHistory.push('/member');
-    // // this.props.history.push("/back")
-    // // history.push('/location')
-    // // history.push('/location');
-    // window.history.pushState(null, null, '/location');
+  redirectToAddMember = () => {
+    this.setState({
+      redirectForNewMember: true
+    });
   }
 
   render() {
+    if (this.state.redirectForNewMember) {
+      return <Redirect to="member" />;
+    }
     const { members } = this.props;
     console.log(members);
     return (
