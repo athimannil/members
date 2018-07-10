@@ -1,6 +1,7 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import { browserHistory, Redirect } from 'react-router';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as memberActions from './../../actions/membersAction';
 import MembersList from './MembersList';
@@ -9,6 +10,7 @@ class Members extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
+      redirectForNewMember: false,
       passwordType: 'password',
       fillables: ['firstName', 'lastName', 'email', 'mobile', 'abroadAddress', 'city'], // this is done through manual listing in array so that you have control which fields should be validated for before submit
       member: {
@@ -128,135 +130,29 @@ class Members extends React.Component {
     return this.state.fillables.every((field) => this.state.member[field].isValid && this.state.member[field].val);
   }
 
+  redirectToAddMember = () => {
+    this.setState({
+      redirectForNewMember: true
+    });
+  }
+
   render() {
+    if (this.state.redirectForNewMember) {
+      return <Redirect to="member" />;
+    }
     const { members } = this.props;
-console.log(members);
+    console.log(members);
     return (
       <div className="container">
         <div className="table-responsive">
+          <input
+            type="submit"
+            value="New Member"
+            className="btn btn-outline-primary"
+            onClick={this.redirectToAddMember}
+          />
           <MembersList members={members} />
         </div>
-        <hr />
-        <form>
-          <div className="form-row">
-            <div className="form-group col-md-6">
-              <label htmlFor="firstName">First Name</label>
-              <input
-                type="text"
-                className="form-control"
-                id="firstName"
-                name="firstName"
-                placeholder="First Name"
-                value={this.state.member.firstName.val}
-                onChange={this.onChange}
-                />
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="lastName">Last name</label>
-              <input
-                type="text"
-                className="form-control"
-                id="lastName"
-                name="lastName"
-                placeholder="Last name"
-                value={this.state.member.lastName.val}
-                onChange={this.onChange}
-                />
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-group col-md-6">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                name="email"
-                placeholder="Email"
-                value={this.state.member.email.val}
-                onChange={this.onChange}
-                />
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="mobile">Mobile</label>
-              <input
-                type="text"
-                className="form-control"
-                id="mobile"
-                name="mobile"
-                placeholder="Mobile"
-                value={this.state.member.mobile.val}
-                onChange={this.onChange}
-                />
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="abroadAddress">Abroad Address</label>
-            <input
-              type="text"
-              className="form-control"
-              id="abroadAddress"
-              name="abroadAddress"
-              placeholder="Apartment, studio, or floor"
-              value={this.state.member.abroadAddress.val}
-              onChange={this.onChange}
-              />
-          </div>
-          <div className="form-group">
-            <label htmlFor="nativeAddress">Native Address</label>
-            <input
-              type="text"
-              className="form-control"
-              id="nativeAddress"
-              placeholder="1234 Main St"
-              name="nativeAddress"
-              value={this.state.member.nativeAddress.val}
-              onChange={this.onChange}
-              />
-          </div>
-          <div className="form-row">
-            <div className="form-group col-md-6">
-              <label htmlFor="city">City</label>
-              <input
-                type="text"
-                className="form-control"
-                id="city"
-                placeholder="City"
-                name="city"
-                value={this.state.member.city.val}
-                onChange={this.onChange}
-                />
-            </div>
-            <div className="form-group col-md-4">
-              <label htmlFor="inputState">State</label>
-              <select id="inputState" className="form-control">
-                <option selected>Choose...</option>
-                <option>...</option>
-              </select>
-            </div>
-            <div className="form-group col-md-2">
-              <label htmlFor="inputZip">Post Code</label>
-              <input
-                type="text"
-                className="form-control"
-                id="inputZip" />
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="gridCheck" />
-              <label className="form-check-label" htmlFor="gridCheck">Check me out</label>
-            </div>
-          </div>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            onClick={this.onSubmit}
-            >Sign in</button>
-        </form>
       </div>
     );
   }
